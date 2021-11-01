@@ -3,7 +3,7 @@
 # Installation steps
 
 To install this project please run the 'npm install' command first to install all the dependencies. 
-Next start the node server.
+Next start the node server with command 'node src/api/server.js'.
 You can now start the project with 'npm start'.
 
 # Problem to solve
