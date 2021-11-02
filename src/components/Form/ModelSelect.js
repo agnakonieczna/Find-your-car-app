@@ -5,6 +5,9 @@ import Button from '../common/Button';
 import { makeToLowerCase } from './Form';
 import { ButtonWrapper } from './Form.style';
 import SelectWithInput from './SelectWithInput';
+import Loading from '../Loading/Loading';
+import Error from '../Error/Error';
+import VehicleNotFound from '../VehicleNotFound/VehicleNotFound';
 
 const ModelSelect = () => {
   const { make, model, stepIncrement, stepDecrement } = useContext(FormContext);
@@ -25,11 +28,11 @@ const ModelSelect = () => {
     }
   );
 
-  if (make !== 'FORD' && make !== 'BMW') return <p>Vehicle not found</p>;
+  if (make !== 'FORD' && make !== 'BMW') return <VehicleNotFound />;
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading />;
 
-  if (isError) return <p>{error}</p>;
+  if (isError) return <Error error={error}/>;
 
   return (
     <>

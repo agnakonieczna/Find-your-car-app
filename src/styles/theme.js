@@ -5,7 +5,8 @@ const theme = {
     lightOrange: '#FFE6B9',
     purple: '#414293',
     lightPurple: '#8687E5',
-    transparentPurple: 'rgba(134, 135, 229, 0.2)'
+    transparentPurple: 'rgba(134, 135, 229, 0.2)',
+    red: '#B51212',
   }
 };
 

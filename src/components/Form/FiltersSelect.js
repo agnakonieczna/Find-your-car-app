@@ -1,16 +1,13 @@
 import { useState, useEffect, useContext } from 'react';
 import { FormContext } from '../../context/FormContext';
 import Button from '../common/Button';
+import Loading from '../Loading/Loading';
+import Error from '../Error/Error';
+import VehicleNotFound from '../VehicleNotFound/VehicleNotFound';
 import EnginePowerUnits from './EnginePowerUnits';
 import { Label, RadioInput, ListItem, ButtonWrapper } from './Form.style';
 
-const FiltersSelect = ({
-  vehicles,
-  isLoading,
-  isError,
-  error,
-  name,
-}) => {
+const FiltersSelect = ({ vehicles, isLoading, isError, error, name }) => {
   const [options, setOptions] = useState([]);
 
   const {
@@ -36,12 +33,12 @@ const FiltersSelect = ({
     setOptions(Array.from(valueOptionsSet).sort((a, b) => (a > b ? 1 : -1)));
   }, [vehicles, name]);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading />;
 
-  if (isError) return <p>{error}</p>;
+  if (isError) return <Error error={error} />;
 
   if (name === 'fuelType' && model !== '3er' && model !== 'C-Max' && model !== 'Fiesta')
-    return <p>Vehicle not found</p>;
+    return <VehicleNotFound />;
 
   const componentInfo = (option) => {
     switch (name) {
