@@ -1,18 +1,14 @@
+import { useContext } from 'react';
 import { useQuery } from 'react-query';
+import { FormContext } from '../../context/FormContext';
 import Button from '../common/Button';
 import { makeToLowerCase } from './Form';
 import { ButtonWrapper } from './Form.style';
 import SelectWithInput from './SelectWithInput';
 
-const ModelSelect = ({
-  stepDecrement,
-  stepIncrement,
-  model,
-  setModel,
-  make,
-  userModelSelect,
-  setUserModelSelect
-}) => {
+const ModelSelect = () => {
+  const { make, model, stepIncrement, stepDecrement } = useContext(FormContext);
+
   const {
     data: modelsOptions,
     isLoading,
@@ -40,17 +36,13 @@ const ModelSelect = ({
       <SelectWithInput
         step='2'
         name='model'
-        inputValue={userModelSelect}
-        setInputValue={setUserModelSelect}
         options={modelsOptions}
-        state={model}
-        setState={setModel}
       />
       <ButtonWrapper>
         <Button back onClick={stepDecrement}>
           Back
         </Button>
-        {model && modelsOptions.includes(model) &&<Button onClick={stepIncrement}>Next</Button>}
+        {model && modelsOptions.includes(model) && <Button onClick={stepIncrement}>Next</Button>}
       </ButtonWrapper>
     </>
   );

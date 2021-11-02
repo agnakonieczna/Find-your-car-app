@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { FormContext } from '../../context/FormContext';
 import Button from '../common/Button';
 import EnginePowerUnits from './EnginePowerUnits';
 import { Label, RadioInput, ListItem, ButtonWrapper } from './Form.style';
@@ -9,16 +10,23 @@ const FiltersSelect = ({
   isError,
   error,
   name,
-  state,
-  setState,
-  stepIncrement,
-  stepDecrement,
-  step,
-  model,
-  setEnginePowerUnits,
-  enginePowerUnits
 }) => {
   const [options, setOptions] = useState([]);
+
+  const {
+    model,
+    fuelType,
+    setFuelType,
+    bodyType,
+    setBodyType,
+    powerEngine,
+    setPowerEngine,
+    engineCapacity,
+    setEngineCapacity,
+    step,
+    stepIncrement,
+    stepDecrement
+  } = useContext(FormContext);
 
   useEffect(() => {
     const valueOptions = vehicles.map((vehicle) => {
@@ -35,40 +43,58 @@ const FiltersSelect = ({
   if (name === 'fuelType' && model !== '3er' && model !== 'C-Max' && model !== 'Fiesta')
     return <p>Vehicle not found</p>;
 
-  const textToDisplay = (option) => {
+  const componentInfo = (option) => {
     switch (name) {
       case 'fuelType':
-        return { title: 'What fuel do you tank?', label: option };
+        return {
+          title: 'What fuel do you tank?',
+          label: option,
+          state: fuelType,
+          setState: setFuelType
+        };
       case 'bodyType':
-        return { title: 'What body type does your car have?', label: option };
+        return {
+          title: 'What body type does your car have?',
+          label: option,
+          state: bodyType,
+          setState: setBodyType
+        };
       case 'enginePowerKW':
-        return { title: 'What power engine does your car have?', label: option + ' KW' };
+        return {
+          title: 'What power engine does your car have?',
+          label: option + ' KW',
+          state: powerEngine,
+          setState: setPowerEngine
+        };
       case 'enginePowerPS':
-        return { title: 'What power engine does your car have?', label: option + ' PS' };
+        return {
+          title: 'What power engine does your car have?',
+          label: option + ' PS',
+          state: powerEngine,
+          setState: setPowerEngine
+        };
       case 'engineCapacity':
-        return { title: 'What engine capacity does your car have?', label: option + ' CC' };
-      default:
-        return { title: '', label: '' };
+        return {
+          title: 'What engine capacity does your car have?',
+          label: option + ' CC',
+          state: engineCapacity,
+          setState: setEngineCapacity
+        };
     }
   };
 
   return (
     <>
       <p>Step {step.toString()}/6</p>
-      <h2>{textToDisplay().title}</h2>
-      {name.startsWith('enginePower') ? (
-        <EnginePowerUnits
-          setEnginePowerUnits={setEnginePowerUnits}
-          enginePowerUnits={enginePowerUnits}
-        />
-      ) : null}
-      <ul onChange={(e) => setState(e.target.value)}>
+      <h2>{componentInfo().title}</h2>
+      {name.startsWith('enginePower') ? <EnginePowerUnits /> : null}
+      <ul onChange={(e) => componentInfo().setState(e.target.value)}>
         {options.map((singleOption, index) => {
           return (
             <ListItem key={index}>
               <RadioInput name={name} type='radio' value={singleOption} />
-              <Label selected={singleOption.toString() === state}>
-                {textToDisplay(singleOption).label}
+              <Label selected={singleOption.toString() === componentInfo().state}>
+                {componentInfo(singleOption).label}
               </Label>
             </ListItem>
           );
@@ -78,9 +104,11 @@ const FiltersSelect = ({
         <Button back onClick={stepDecrement}>
           Back
         </Button>
-        {state &&
+        {componentInfo().state &&
           options.includes(
-            name.startsWith('enginePower') || name === 'engineCapacity' ? +state : state
+            name.startsWith('enginePower') || name === 'engineCapacity'
+              ? +componentInfo().state
+              : componentInfo().state
           ) && <Button onClick={stepIncrement}>Next</Button>}
       </ButtonWrapper>
     </>

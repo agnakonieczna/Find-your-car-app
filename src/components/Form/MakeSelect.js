@@ -1,8 +1,12 @@
+import { useContext } from 'react';
 import { useQuery } from 'react-query';
+import { FormContext } from '../../context/FormContext';
 import Button from '../common/Button';
 import SelectWithInput from './SelectWithInput';
 
-const MakeSelect = ({ stepIncrement, make, setMake, userMakeSelect, setUserMakeSelect }) => {
+const MakeSelect = () => {
+  const { make, stepIncrement } = useContext(FormContext);
+
   const {
     isLoading,
     isError,
@@ -19,11 +23,7 @@ const MakeSelect = ({ stepIncrement, make, setMake, userMakeSelect, setUserMakeS
       <SelectWithInput
         step='1'
         name='make'
-        inputValue={userMakeSelect}
-        setInputValue={setUserMakeSelect}
         options={makesOptions}
-        state={make}
-        setState={setMake}
       />
       {make && (
         <Button singleBtn onClick={stepIncrement}>

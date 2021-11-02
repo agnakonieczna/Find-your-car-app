@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import { useQuery } from 'react-query';
 import Container from '../common/Container';
 import FiltersSelect from './FiltersSelect';
@@ -6,29 +6,14 @@ import { Wrapper } from './Form.style';
 import MakeSelect from './MakeSelect';
 import ModelSelect from './ModelSelect';
 import SelectedVehicle from './SelectedVehicle';
+import { FormContext } from '../../context/FormContext';
 
 export const makeToLowerCase = (value) =>
   value.split('')[0] + value.split('').slice(1).join('').toLowerCase();
 
 const Form = ({ setFormVisible }) => {
-  const [step, setStep] = useState(1);
-  const [make, setMake] = useState('');
-  const [userMakeSelect, setUserMakeSelect] = useState('');
-  const [model, setModel] = useState('');
-  const [userModelSelect, setUserModelSelect] = useState('');
-  const [fuelType, setFuelType] = useState('');
-  const [bodyType, setBodyType] = useState('');
-  const [powerEngine, setPowerEngine] = useState('');
-  const [engineCapacity, setEngineCapacity] = useState('');
-  const [enginePowerUnits, setEnginePowerUnits] = useState('KW');
-
-  const stepIncrement = () => {
-    setStep((prev) => prev + 1);
-  };
-
-  const stepDecrement = () => {
-    setStep((prev) => prev - 1);
-  };
+  const { make, model, fuelType, bodyType, powerEngine, engineCapacity, enginePowerUnits, step } =
+    useContext(FormContext);
 
   const {
     isLoading,
@@ -51,51 +36,21 @@ const Form = ({ setFormVisible }) => {
   return (
     <Wrapper>
       <Container>
-        {step === 1 && (
-          <MakeSelect
-            stepIncrement={stepIncrement}
-            make={make}
-            setMake={setMake}
-            setStep={setStep}
-            setUserMakeSelect={setUserMakeSelect}
-            userMakeSelect={userMakeSelect}
-          />
-        )}
-        {step === 2 && (
-          <ModelSelect
-            stepIncrement={stepIncrement}
-            stepDecrement={stepDecrement}
-            model={model}
-            setModel={setModel}
-            make={make}
-            userModelSelect={userModelSelect}
-            setUserModelSelect={setUserModelSelect}
-          />
-        )}
+        {step === 1 && <MakeSelect />}
+        {step === 2 && <ModelSelect />}
         {step === 3 && (
           <FiltersSelect
-            stepIncrement={stepIncrement}
-            stepDecrement={stepDecrement}
             vehicles={vehicles}
             isLoading={isLoading}
             isError={isError}
             error={error}
-            setState={setFuelType}
             name='fuelType'
-            state={fuelType}
-            step={step}
-            model={model}
           />
         )}
         {step === 4 && (
           <FiltersSelect
             vehicles={vehicles.filter((vehicle) => vehicle.fuelType === fuelType)}
-            setState={setBodyType}
-            stepIncrement={stepIncrement}
-            stepDecrement={stepDecrement}
             name='bodyType'
-            state={bodyType}
-            step={step}
           />
         )}
         {step === 5 && (
@@ -103,14 +58,7 @@ const Form = ({ setFormVisible }) => {
             vehicles={vehicles.filter(
               (vehicle) => vehicle.fuelType === fuelType && vehicle.bodyType === bodyType
             )}
-            setState={setPowerEngine}
-            stepIncrement={stepIncrement}
-            stepDecrement={stepDecrement}
             name={enginePowerUnits === 'KW' ? 'enginePowerKW' : 'enginePowerPS'}
-            state={powerEngine}
-            step={step}
-            enginePowerUnits={enginePowerUnits}
-            setEnginePowerUnits={setEnginePowerUnits}
           />
         )}
         {step === 6 && (
@@ -123,12 +71,7 @@ const Form = ({ setFormVisible }) => {
                   ? vehicle.enginePowerKW === +powerEngine
                   : vehicle.enginePowerPS === +powerEngine)
             )}
-            setState={setEngineCapacity}
-            stepIncrement={stepIncrement}
-            stepDecrement={stepDecrement}
             name='engineCapacity'
-            state={engineCapacity}
-            step={step}
           />
         )}
         {step === 7 && (
@@ -142,7 +85,6 @@ const Form = ({ setFormVisible }) => {
                   ? vehicle.enginePowerKW === +powerEngine
                   : vehicle.enginePowerPS === +powerEngine)
             )}
-            stepDecrement={stepDecrement}
             setFormVisible={setFormVisible}
           />
         )}

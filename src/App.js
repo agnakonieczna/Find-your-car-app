@@ -5,6 +5,7 @@ import theme from './styles/theme';
 import Hero from './components/Hero/Hero';
 import Form from './components/Form/Form';
 import { QueryClientProvider, QueryClient } from 'react-query';
+import FormProvider from './context/FormContext';
 
 const queryClient = new QueryClient();
 
@@ -18,7 +19,9 @@ function App() {
         {!formVisible ? (
           <Hero setFormVisible={setFormVisible} />
         ) : (
-          <Form setFormVisible={setFormVisible} />
+          <FormProvider>
+            <Form setFormVisible={setFormVisible} />
+          </FormProvider>
         )}
       </ThemeProvider>
     </QueryClientProvider>
