@@ -4,7 +4,7 @@ import Container from '../common/Container';
 import FiltersSelect from './FiltersSelect';
 import { Wrapper } from './Form.style';
 import MakeSelect from './MakeSelect';
-import ModelSelect from './ModalSelect';
+import ModelSelect from './ModelSelect';
 import SelectedVehicle from './SelectedVehicle';
 
 export const makeToLowerCase = (value) =>
@@ -53,7 +53,7 @@ const Form = ({ setFormVisible }) => {
       <Container>
         {step === 1 && (
           <MakeSelect
-            increment={stepIncrement}
+            stepIncrement={stepIncrement}
             make={make}
             setMake={setMake}
             setStep={setStep}
@@ -63,8 +63,8 @@ const Form = ({ setFormVisible }) => {
         )}
         {step === 2 && (
           <ModelSelect
-            increment={stepIncrement}
-            decrement={stepDecrement}
+            stepIncrement={stepIncrement}
+            stepDecrement={stepDecrement}
             model={model}
             setModel={setModel}
             make={make}
@@ -74,8 +74,8 @@ const Form = ({ setFormVisible }) => {
         )}
         {step === 3 && (
           <FiltersSelect
-            increment={stepIncrement}
-            decrement={stepDecrement}
+            stepIncrement={stepIncrement}
+            stepDecrement={stepDecrement}
             vehicles={vehicles}
             isLoading={isLoading}
             isError={isError}
@@ -91,8 +91,8 @@ const Form = ({ setFormVisible }) => {
           <FiltersSelect
             vehicles={vehicles.filter((vehicle) => vehicle.fuelType === fuelType)}
             setState={setBodyType}
-            increment={stepIncrement}
-            decrement={stepDecrement}
+            stepIncrement={stepIncrement}
+            stepDecrement={stepDecrement}
             name='bodyType'
             state={bodyType}
             step={step}
@@ -104,8 +104,8 @@ const Form = ({ setFormVisible }) => {
               (vehicle) => vehicle.fuelType === fuelType && vehicle.bodyType === bodyType
             )}
             setState={setPowerEngine}
-            increment={stepIncrement}
-            decrement={stepDecrement}
+            stepIncrement={stepIncrement}
+            stepDecrement={stepDecrement}
             name={enginePowerUnits === 'KW' ? 'enginePowerKW' : 'enginePowerPS'}
             state={powerEngine}
             step={step}
@@ -124,8 +124,8 @@ const Form = ({ setFormVisible }) => {
                   : vehicle.enginePowerPS === +powerEngine)
             )}
             setState={setEngineCapacity}
-            increment={stepIncrement}
-            decrement={stepDecrement}
+            stepIncrement={stepIncrement}
+            stepDecrement={stepDecrement}
             name='engineCapacity'
             state={engineCapacity}
             step={step}
@@ -142,7 +142,7 @@ const Form = ({ setFormVisible }) => {
                   ? vehicle.enginePowerKW === +powerEngine
                   : vehicle.enginePowerPS === +powerEngine)
             )}
-            decrement={stepDecrement}
+            stepDecrement={stepDecrement}
             setFormVisible={setFormVisible}
           />
         )}

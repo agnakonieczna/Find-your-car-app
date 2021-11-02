@@ -1,7 +1,7 @@
 import Button from '../common/Button';
-import { Content, Info } from './Form.style';
+import { ButtonWrapper, Content, Info, Bold } from './Form.style';
 
-const SelectedVehicle = ({ filteredVehicles, decrement, setFormVisible }) => {
+const SelectedVehicle = ({ filteredVehicles, stepDecrement, setFormVisible }) => {
   const [selectedVehicle] = filteredVehicles;
 
   if (!filteredVehicles.length) return <p>We don't have car with provided parameters.</p>;
@@ -11,19 +11,22 @@ const SelectedVehicle = ({ filteredVehicles, decrement, setFormVisible }) => {
       <Content>
         <h2>Selected vehicle:</h2>
         <Info>
-          <p>Make: {selectedVehicle.make}</p>
-          <p>Model: {selectedVehicle.model}</p>
-          <p>Body type: {selectedVehicle.bodyType}</p>
-          <p>Fuel type: {selectedVehicle.fuelType}</p>
-          <p>Engine power: {selectedVehicle.enginePowerKW} KW</p>
-          <p>Engine capacity: {selectedVehicle.engineCapacity} CC</p>
+          <p><Bold>Make:</Bold> {selectedVehicle.make}</p>
+          <p><Bold>Model:</Bold> {selectedVehicle.model}</p>
+          <p><Bold>Body type:</Bold> {selectedVehicle.bodyType}</p>
+          <p><Bold>Fuel type:</Bold> {selectedVehicle.fuelType}</p>
+          <p><Bold>Engine power KW:</Bold> {selectedVehicle.enginePowerKW} KW</p>
+          <p><Bold>Engine power PS:</Bold> {selectedVehicle.enginePowerPS} PS</p>
+          <p><Bold>Engine capacity:</Bold> {selectedVehicle.engineCapacity} CC</p>
         </Info>
-        <Button last back onClick={decrement}>
-          Back
-        </Button>
-        <Button last onClick={() => setFormVisible(false)}>
-          Again
-        </Button>
+        <ButtonWrapper>
+          <Button last back onClick={stepDecrement}>
+            Back
+          </Button>
+          <Button last onClick={() => setFormVisible(false)}>
+            Again
+          </Button>
+        </ButtonWrapper>
       </Content>
     </div>
   );

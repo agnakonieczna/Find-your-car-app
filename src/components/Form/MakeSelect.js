@@ -1,8 +1,8 @@
 import { useQuery } from 'react-query';
 import Button from '../common/Button';
-import { Input, Label, RadioInput, List, ListItem } from './Form.style';
+import SelectWithInput from './SelectWithInput';
 
-const MakeSelect = ({ increment, make, setMake, userMakeSelect, setUserMakeSelect }) => {
+const MakeSelect = ({ stepIncrement, make, setMake, userMakeSelect, setUserMakeSelect }) => {
   const {
     isLoading,
     isError,
@@ -16,25 +16,17 @@ const MakeSelect = ({ increment, make, setMake, userMakeSelect, setUserMakeSelec
 
   return (
     <>
-      <p>Step 1/6</p>
-      <h2>Please select your car make</h2>
-      <Input
-        type='text'
-        value={userMakeSelect}
-        onChange={(e) => setUserMakeSelect(e.target.value)}
+      <SelectWithInput
+        step='1'
+        name='make'
+        inputValue={userMakeSelect}
+        setInputValue={setUserMakeSelect}
+        options={makesOptions}
+        state={make}
+        setState={setMake}
       />
-      <List onChange={(e) => setMake(e.target.value)}>
-        {makesOptions
-          .filter((makeOption) => makeOption.startsWith(userMakeSelect.toUpperCase()))
-          .map((makeOption, index) => (
-            <ListItem key={index}>
-              <RadioInput name='make' type='radio' value={makeOption} />
-              <Label selected={makeOption === make}>{makeOption}</Label>
-            </ListItem>
-          ))}
-      </List>
       {make && (
-        <Button singleBtn onClick={increment}>
+        <Button singleBtn onClick={stepIncrement}>
           Next
         </Button>
       )}

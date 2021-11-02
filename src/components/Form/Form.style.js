@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
 export const Wrapper = styled.div`
   padding: 3rem 0;
@@ -7,12 +7,14 @@ export const Wrapper = styled.div`
 export const List = styled.ul`
   @media (min-width: 768px) {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     column-gap: 1rem;
   }
 
   @media (min-width: 1024px) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 80rem;
+    margin: 0 auto 2rem;
   }
 `;
 
@@ -21,10 +23,17 @@ export const ListItem = styled.li`
   max-width: 45rem;
   margin: 0 auto 1rem;
   position: relative;
+
+  ${({small}) => small && css`
+    max-width: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `}
 `;
 
 export const Input = styled.input`
-  border: 0.1rem solid ${({ theme }) => theme.colors.purple};
+  border: 0.15rem solid ${({ theme }) => theme.colors.purple};
   border-radius: 0.5rem;
   padding: 1.5rem;
   width: 100%;
@@ -40,18 +49,18 @@ export const RadioInput = styled.input`
   width: 100%;
   height: 100%;
   opacity: 0;
+  cursor: pointer;
 `;
 
 export const Label = styled.label`
   display: block;
-  border: 0.1rem solid ${({ theme }) => theme.colors.purple};
+  border: 0.15rem solid ${({ theme }) => theme.colors.purple};
   border-radius: 0.5rem;
   padding: 1.5rem;
   background-color: ${({ selected, theme }) =>
     selected ? theme.colors.purple : theme.colors.white};
   color: ${({ selected, theme }) => (selected ? theme.colors.white : theme.colors.black)};
   font-size: 1.4rem;
-  cursor: pointer;
 `;
 
 export const ButtonWrapper = styled.div`
@@ -64,6 +73,11 @@ export const ButtonWrapper = styled.div`
   @media (min-width: 768px) {
     max-width: 100%;
   }
+
+  @media (min-width: 1024px) {
+    max-width: 80rem;
+    margin: 0 auto;
+  }
 `;
 
 export const Content = styled.div`
@@ -71,13 +85,25 @@ export const Content = styled.div`
 `;
 
 export const Info = styled.div`
-  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  border: 0.15rem solid ${({ theme }) => theme.colors.purple};
+  border-radius: 0.5rem;
+  background-color: ${({ theme }) => theme.colors.white};
+  max-width: 80rem;
+  margin: 0 auto;
 `;
 
-export const UnitsWrapper = styled.div`
+export const Bold = styled.span`
+  font-weight: 700;
+`;
+
+export const EnginePowerList = styled.ul`
   display: flex;
-  justify-content: space-between;
-  width: 15rem;
-  margin: 0 auto;
-  margin-bottom: 2rem;
+  justify-content: space-around;
+  max-width: 30rem;
+  margin: 0 auto 2rem;
 `;
