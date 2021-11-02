@@ -7,7 +7,3 @@ export const Wrapper = styled.div`
     height: calc(100vh - 6rem);
     position: relative;
 `;
-
-export const Info = styled.p`
-    text-align: center;
-`

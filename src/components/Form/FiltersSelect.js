@@ -25,7 +25,7 @@ const FiltersSelect = ({ vehicles, isLoading, isError, error, name }) => {
     stepDecrement
   } = useContext(FormContext);
 
-  //getting options of fuelType, bodyType and engineType available for the make and model user chosen
+  //getting options of fuelType, bodyType and engine power and capacity available for the make and model user chosen
   useEffect(() => {
     const valueOptions = vehicles.map((vehicle) => {
       return vehicle[name];
@@ -60,14 +60,14 @@ const FiltersSelect = ({ vehicles, isLoading, isError, error, name }) => {
         };
       case 'enginePowerKW':
         return {
-          title: 'What power engine does your car have?',
+          title: 'What engine power does your car have?',
           label: option + ' KW',
           state: powerEngine,
           setState: setPowerEngine
         };
       case 'enginePowerPS':
         return {
-          title: 'What power engine does your car have?',
+          title: 'What engine power does your car have?',
           label: option + ' PS',
           state: powerEngine,
           setState: setPowerEngine

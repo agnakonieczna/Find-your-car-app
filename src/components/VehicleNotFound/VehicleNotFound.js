@@ -7,10 +7,10 @@ const VehicleNotFound = () => {
   const { stepDecrement } = useContext(FormContext);
   return (
     <Wrapper>
-      <Info>
+      <h2>
         At the moment our car base is pretty small and we only support BMW 3er model and Ford Fiesta
         and C-Max models.
-      </Info>
+      </h2>
       <Button back onClick={stepDecrement}>
         Back
       </Button>
