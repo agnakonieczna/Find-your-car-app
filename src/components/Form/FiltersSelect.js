@@ -1,11 +1,11 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FormContext } from '../../context/FormContext';
 import Button from '../common/Button';
-import Loading from '../Loading/Loading';
 import Error from '../Error/Error';
+import Loading from '../Loading/Loading';
 import VehicleNotFound from '../VehicleNotFound/VehicleNotFound';
 import EnginePowerUnits from './EnginePowerUnits';
-import { Label, RadioInput, ListItem, ButtonWrapper } from './Form.style';
+import { ButtonWrapper, Label, ListItem, RadioInput } from './Form.style';
 
 const FiltersSelect = ({ vehicles, isLoading, isError, error, name }) => {
   const [options, setOptions] = useState([]);
@@ -25,6 +25,7 @@ const FiltersSelect = ({ vehicles, isLoading, isError, error, name }) => {
     stepDecrement
   } = useContext(FormContext);
 
+  //getting options of fuelType, bodyType and engineType available for the make and model user chosen
   useEffect(() => {
     const valueOptions = vehicles.map((vehicle) => {
       return vehicle[name];
@@ -40,6 +41,7 @@ const FiltersSelect = ({ vehicles, isLoading, isError, error, name }) => {
   if (name === 'fuelType' && model !== '3er' && model !== 'C-Max' && model !== 'Fiesta')
     return <VehicleNotFound />;
 
+  //getting component information and state
   const componentInfo = (option) => {
     switch (name) {
       case 'fuelType':

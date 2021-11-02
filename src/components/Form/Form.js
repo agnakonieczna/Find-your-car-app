@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { useQuery } from 'react-query';
+import { FormContext } from '../../context/FormContext';
 import Container from '../common/Container';
 import FiltersSelect from './FiltersSelect';
 import { Wrapper } from './Form.style';
 import MakeSelect from './MakeSelect';
 import ModelSelect from './ModelSelect';
 import SelectedVehicle from './SelectedVehicle';
-import { FormContext } from '../../context/FormContext';
 
 export const makeToLowerCase = (value) =>
   value.split('')[0] + value.split('').slice(1).join('').toLowerCase();
