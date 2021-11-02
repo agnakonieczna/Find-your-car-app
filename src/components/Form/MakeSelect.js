@@ -23,17 +23,12 @@ const MakeSelect = ({ increment, make, setMake, userMakeSelect, setUserMakeSelec
         value={userMakeSelect}
         onChange={(e) => setUserMakeSelect(e.target.value)}
       />
-      <List>
+      <List onChange={(e) => setMake(e.target.value)}>
         {makesOptions
           .filter((makeOption) => makeOption.startsWith(userMakeSelect.toUpperCase()))
           .map((makeOption, index) => (
             <ListItem key={index}>
-              <RadioInput
-                name='make'
-                type='radio'
-                value={makeOption}
-                onChange={(e) => setMake(e.target.value)}
-              />
+              <RadioInput name='make' type='radio' value={makeOption} />
               <Label selected={makeOption === make}>{makeOption}</Label>
             </ListItem>
           ))}

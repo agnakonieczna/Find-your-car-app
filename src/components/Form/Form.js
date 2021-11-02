@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import MakeSelect from './MakeSelect';
-import ModelSelect from './ModalSelect';
+import { useQuery } from 'react-query';
 import Container from '../common/Container';
 import FiltersSelect from './FiltersSelect';
 import { Wrapper } from './Form.style';
-import { useQuery } from 'react-query';
+import MakeSelect from './MakeSelect';
+import ModelSelect from './ModalSelect';
+import SelectedVehicle from './SelectedVehicle';
 
 export const makeToLowerCase = (value) =>
   value.split('')[0] + value.split('').slice(1).join('').toLowerCase();
@@ -19,6 +20,7 @@ const Form = ({ setFormVisible }) => {
   const [bodyType, setBodyType] = useState('');
   const [powerEngine, setPowerEngine] = useState('');
   const [engineCapacity, setEngineCapacity] = useState('');
+  const [enginePowerUnits, setEnginePowerUnits] = useState('KW');
 
   const stepIncrement = () => {
     setStep((prev) => prev + 1);
@@ -36,7 +38,6 @@ const Form = ({ setFormVisible }) => {
   } = useQuery(
     ['vehicles', model, make],
     () => {
-      console.log('fetch');
       return fetch(
         `http://localhost:8080/api/vehicles?make=${makeToLowerCase(make)}&model=${model}`
       ).then((resp) => resp.json());
@@ -105,9 +106,11 @@ const Form = ({ setFormVisible }) => {
             setState={setPowerEngine}
             increment={stepIncrement}
             decrement={stepDecrement}
-            name='enginePowerKW'
+            name={enginePowerUnits === 'KW' ? 'enginePowerKW' : 'enginePowerPS'}
             state={powerEngine}
             step={step}
+            enginePowerUnits={enginePowerUnits}
+            setEnginePowerUnits={setEnginePowerUnits}
           />
         )}
         {step === 6 && (
@@ -116,7 +119,9 @@ const Form = ({ setFormVisible }) => {
               (vehicle) =>
                 vehicle.fuelType === fuelType &&
                 vehicle.bodyType === bodyType &&
-                vehicle.enginePowerKW === +powerEngine
+                (enginePowerUnits === 'KW'
+                  ? vehicle.enginePowerKW === +powerEngine
+                  : vehicle.enginePowerPS === +powerEngine)
             )}
             setState={setEngineCapacity}
             increment={stepIncrement}
@@ -124,6 +129,21 @@ const Form = ({ setFormVisible }) => {
             name='engineCapacity'
             state={engineCapacity}
             step={step}
+          />
+        )}
+        {step === 7 && (
+          <SelectedVehicle
+            filteredVehicles={vehicles.filter(
+              (vehicle) =>
+                vehicle.fuelType === fuelType &&
+                vehicle.bodyType === bodyType &&
+                vehicle.engineCapacity === +engineCapacity &&
+                (enginePowerUnits === 'KW'
+                  ? vehicle.enginePowerKW === +powerEngine
+                  : vehicle.enginePowerPS === +powerEngine)
+            )}
+            decrement={stepDecrement}
+            setFormVisible={setFormVisible}
           />
         )}
       </Container>

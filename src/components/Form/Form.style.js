@@ -65,3 +65,19 @@ export const ButtonWrapper = styled.div`
     max-width: 100%;
   }
 `;
+
+export const Content = styled.div`
+  position: relative;
+`;
+
+export const Info = styled.div`
+  margin: 2rem 0;
+`;
+
+export const UnitsWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 15rem;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+`;

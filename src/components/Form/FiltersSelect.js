@@ -13,17 +13,15 @@ const FiltersSelect = ({
   increment,
   decrement,
   step,
-  model
+  model,
+  setEnginePowerUnits
 }) => {
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
     const valueOptions = vehicles.map((vehicle) => {
-      return name === 'enginePowerKW' || name === 'engineCapacity'
-        ? vehicle[name].toString()
-        : vehicle[name];
+      return vehicle[name];
     });
-
     const valueOptionsSet = new Set(valueOptions);
     setOptions(Array.from(valueOptionsSet).sort((a, b) => (a > b ? 1 : -1)));
   }, [vehicles, name]);
@@ -35,36 +33,40 @@ const FiltersSelect = ({
   if (name === 'fuelType' && model !== '3er' && model !== 'C-Max' && model !== 'Fiesta')
     return <p>Vehicle not found</p>;
 
-  const getTitle = () => {
+  const getText = (option) => {
     switch (name) {
       case 'fuelType':
-        return 'What fuel do you tank?';
+        return { title: 'What fuel do you tank?', label: option };
       case 'bodyType':
-        return 'What body type does your car have?';
+        return { title: 'What body type does your car have?', label: option };
       case 'enginePowerKW':
-        return 'What power engine does your car have?';
+        return { title: 'What power engine does your car have?', label: option + ' KW' };
+      case 'enginePowerPS':
+        return { title: 'What power engine does your car have?', label: option + ' PS' };
       case 'engineCapacity':
-        return 'What engine capacity does your car have?';
+        return { title: 'What engine capacity does your car have?', label: option + ' CC' };
+        default: return {title: '', label: ''}
     }
   };
 
   return (
     <>
       <p>{step.toString()}/6</p>
-      <h2>{getTitle()}</h2>
-      <ul>
+      <h2>{getText().title}</h2>
+      {name.startsWith('enginePower') ? (
+        <div onChange={(e) => setEnginePowerUnits(e.target.value)}>
+          <label>KW</label>
+          <input type='radio' name='unit' value='KW' />
+          <label>PS</label>
+          <input type='radio' name='unit' value='PS' />
+        </div>
+      ) : null}
+      <ul onChange={(e) => setState(e.target.value)}>
         {options.map((singleOption, index) => {
           return (
             <ListItem key={index}>
-              <RadioInput
-                name={name}
-                type='radio'
-                value={singleOption}
-                onChange={(e) => setState(e.target.value)}
-              />
-              <Label selected={singleOption === state}>
-                {name === 'enginePowerKW' ? singleOption + ' KW' : singleOption}
-              </Label>
+              <RadioInput name={name} type='radio' value={singleOption} />
+              <Label selected={singleOption.toString() === state}>{getText(singleOption).label}</Label>
             </ListItem>
           );
         })}
@@ -73,7 +75,10 @@ const FiltersSelect = ({
         <Button back onClick={decrement}>
           Back
         </Button>
-        {state && options.includes(state) && <Button onClick={increment}>Next</Button>}
+        {state &&
+          options.includes(
+            name.startsWith('enginePower') || name === 'engineCapacity' ? +state : state
+          ) && <Button onClick={increment}>Next</Button>}
       </ButtonWrapper>
     </>
   );

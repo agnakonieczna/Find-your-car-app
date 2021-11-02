@@ -43,18 +43,13 @@ const ModelSelect = ({
         value={userModelSelect}
         onChange={(e) => setUserModelSelect(e.target.value)}
       />
-      <List>
+      <List onChange={(e) => setModel(e.target.value)}>
         {modelsOptions
           .filter((modelOption) => modelOption.startsWith(userModelSelect))
           .map((modelOption, index) => {
             return (
               <ListItem key={index}>
-                <RadioInput
-                  type='radio'
-                  name='model'
-                  value={modelOption}
-                  onChange={(e) => setModel(e.target.value)}
-                />
+                <RadioInput type='radio' name='model' value={modelOption} />
                 <Label selected={modelOption === model}>{modelOption}</Label>
               </ListItem>
             );
