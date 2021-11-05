@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.js": "/Find-your-car-app/static/js/main.93cf92f4.chunk.js",
+    "main.js.map": "/Find-your-car-app/static/js/main.93cf92f4.chunk.js.map",
+    "runtime-main.js": "/Find-your-car-app/static/js/runtime-main.1996d8dc.js",
+    "runtime-main.js.map": "/Find-your-car-app/static/js/runtime-main.1996d8dc.js.map",
+    "static/js/2.88078fb7.chunk.js": "/Find-your-car-app/static/js/2.88078fb7.chunk.js",
+    "static/js/2.88078fb7.chunk.js.map": "/Find-your-car-app/static/js/2.88078fb7.chunk.js.map",
+    "index.html": "/Find-your-car-app/index.html",
+    "static/js/2.88078fb7.chunk.js.LICENSE.txt": "/Find-your-car-app/static/js/2.88078fb7.chunk.js.LICENSE.txt",
+    "static/media/arrow.769a61d8.svg": "/Find-your-car-app/static/media/arrow.769a61d8.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1996d8dc.js",
+    "static/js/2.88078fb7.chunk.js",
+    "static/js/main.93cf92f4.chunk.js"
+  ]
+}
